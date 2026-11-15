@@ -86,7 +86,7 @@ npm run dev
 
 The backend server runs at:
 
-`http://localhost:5000`
+`http://localhost:3000`
 
 ### 5. Start the Frontend
 
