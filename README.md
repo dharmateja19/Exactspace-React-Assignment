@@ -59,8 +59,8 @@ react-chat-app/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd react-chat-app
+git clone https://github.com/dharmateja19/Exactspace-React-Assignment
+cd Exactspace-React-Assignment
 ```
 
 ### 2. Install Frontend Dependencies
