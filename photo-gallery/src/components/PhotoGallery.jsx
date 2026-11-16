@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PhotoCard from "./PhotoCard";
 
 function PhotoGallery() {
@@ -7,13 +7,16 @@ function PhotoGallery() {
 	const [loading, setLoading] = useState(false);
 	const [hasMore, setHasMore] = useState(true);
 
+	const observerRef = useRef(null);
+
+	// Fetch photos whenever the page changes
 	useEffect(() => {
 		const fetchPhotos = async () => {
 			try {
 				setLoading(true);
 
 				const response = await fetch(
-					`https://picsum.photos/v2/list?page=${page}&limit=10`,
+					`https://picsum.photos/v2/list?page=${page}`,
 				);
 
 				if (!response.ok) {
@@ -27,7 +30,7 @@ function PhotoGallery() {
 					return;
 				}
 
-				setPhotos((prev) => [...prev, ...data]);
+				setPhotos((prevPhotos) => [...prevPhotos, ...data]);
 			} catch (error) {
 				console.error("Error fetching photos:", error);
 			} finally {
@@ -37,6 +40,31 @@ function PhotoGallery() {
 
 		fetchPhotos();
 	}, [page]);
+
+	// Observe the bottom element for infinite scrolling
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && !loading && hasMore) {
+					setPage((prevPage) => prevPage + 1);
+				}
+			},
+			{
+				threshold: 0,
+				rootMargin: "200px",
+			},
+		);
+
+		const currentElement = observerRef.current;
+
+		if (currentElement) {
+			observer.observe(currentElement);
+		}
+
+		return () => {
+			observer.disconnect();
+		};
+	}, [loading, hasMore]);
 
 	return (
 		<div className="min-h-screen bg-[#F7F5F0] px-4 py-8">
@@ -61,19 +89,15 @@ function PhotoGallery() {
 					</p>
 				)}
 
-				{!hasMore && photos.length > 0 && (
+				{!hasMore && (
 					<p className="text-center text-sm text-[#8B806E] py-6">
 						You've reached the end of the gallery.
 					</p>
 				)}
 
-				{hasMore && !loading && (
-					<button
-						onClick={() => setPage((prev) => prev + 1)}
-						className="block mx-auto mt-8 px-6 py-2 rounded-lg bg-[#70685D] text-white hover:bg-[#514C43] transition-colors"
-					>
-						Load More
-					</button>
+				{/* Invisible element observed for infinite scrolling */}
+				{hasMore && (
+					<div ref={observerRef} className="h-10" aria-hidden="true" />
 				)}
 			</div>
 		</div>

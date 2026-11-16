@@ -7,8 +7,8 @@ A responsive photo gallery built using **React.js and Tailwind CSS**, integrated
 - **Photo Gallery:** Displays photographs fetched from the Picsum Photos API.
 - **Author Information:** Shows the photographer's name below each image.
 - **Like Functionality:** Like individual photos with an incrementing like counter.
-- **Pagination:** Fetches photos page by page using the API.
-- **Load More:** Load additional photos without replacing previously displayed photos.
+- **Automatic Infinite Scrolling:** Automatically fetches the next page when the user approaches the bottom of the page.
+- **Pagination:** Fetches photos page by page and appends new photos without replacing existing ones.
 - **Lazy Loading:** Images load as they approach the visible area.
 - **Responsive Design:** Minimal and responsive interface styled with Tailwind CSS.
 
@@ -35,7 +35,6 @@ photo-gallery/
 │   ├── App.jsx
 │   ├── index.css
 │   └── main.jsx
-├── public/
 ├── index.html
 ├── package.json
 └── README.md
@@ -101,7 +100,6 @@ Pagination is implemented through the `page` query parameter. Newly fetched phot
 
 ## Future Improvements
 
-- Automatic infinite scrolling using Intersection Observer.
 - Search and filter photographs.
 - Persistent like counts using local storage or a backend.
 - Photo preview modal with detailed information.
