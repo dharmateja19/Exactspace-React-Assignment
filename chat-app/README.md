@@ -59,8 +59,8 @@ react-chat-app/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd react-chat-app
+git clone https://github.com/dharmateja19/Exactspace-React-Assignment
+cd chat-app
 ```
 
 ### 2. Install Frontend Dependencies
@@ -86,7 +86,7 @@ npm run dev
 
 The backend server runs at:
 
-`http://localhost:5000`
+`http://localhost:3000`
 
 ### 5. Start the Frontend
 
